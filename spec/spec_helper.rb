@@ -2,6 +2,7 @@ require 'rubygems'
 require 'bundler/setup'
 
 require File.expand_path('../../lib/stylesheet.rb', __FILE__)
+require File.expand_path('../../spec/stubs/fake_request.rb', __FILE__)
 
 include Stylesheet
 
