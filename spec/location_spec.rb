@@ -8,6 +8,11 @@ describe Location do
       location = Location.new(url)
       expect(location.host).to eq "initvisual.com"
     end
+    
+    it "should accept relative urls" do 
+      location = Location.new("/some/path.html")
+      expect(location.to_s).to eq "/some/path.html"
+    end
   end
   
   describe "#host" do 
@@ -196,6 +201,12 @@ describe Location do
     
     it "should ignore query string if no query string present" do 
       url = "https://initvisual.com/services"
+      location = Location.new(url)
+      expect(location.to_s).to eq url
+    end
+
+    it "should ignore scheme if no protocol is present" do 
+      url = "/services"
       location = Location.new(url)
       expect(location.to_s).to eq url
     end

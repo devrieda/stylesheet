@@ -1,6 +1,8 @@
 module Stylesheet
   class Location
-    attr_accessor :uri, :hash, :host, :href, :pathname, :port, :protocol, :search
+    attr_accessor :uri, :host, :href
+    attr_reader :hash, :pathname, :port, :protocol, :search
+
     alias_method :hostname,  :host
     alias_method :hostname=, :host=
 
@@ -15,29 +17,39 @@ module Stylesheet
       self.search   = uri.query
       self.port     = uri.port
     end
-    
-    def pathname=(pathname)
-      @pathname = pathname && pathname[0,1] == "/" ? pathname : "/#{pathname}"
-    end
-    
-    def hash=(hash)
-      hash = hash.to_s.gsub("#", "")
-      @hash = hash && hash != "" ? "##{hash}" : ""
-    end
 
     def protocol=(protocol)
       protocol = protocol.to_s.gsub(":", "")
       @protocol = protocol + ":"
     end
-    
-    def search=(search)
-      search = search.to_s.gsub("?", "")
-      @search = search && search != "" ? "?#{search}" : ""
+
+    def pathname=(pathname)
+      @pathname = pathname && pathname[0,1] == "/" ? pathname : "/#{pathname}"
     end
 
     def port=(port)
       @port = port_80? || port_443? ? "" : "#{port}"
     end
+
+    def search=(search)
+      search = search.to_s.gsub("?", "")
+      @search = search && search != "" ? "?#{search}" : ""
+    end
+
+    def hash=(hash)
+      hash = hash.to_s.gsub("#", "")
+      @hash = hash && hash != "" ? "##{hash}" : ""
+    end
+
+    def to_s
+      port_w_colon = port     && port     != ""  ? ":#{port}"      : ""
+      scheme       = protocol && protocol != ":" ? "#{protocol}//" : ""
+
+      "#{scheme}#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
+    end
+
+
+    private
 
     def port_80?
       return false unless uri && uri.scheme
@@ -49,18 +61,15 @@ module Stylesheet
       uri.port == 443 && uri.scheme == "https"
     end
 
-    def to_s
-      port_w_colon = port && port != "" ? ":#{port}" : ""
-      "#{protocol}//#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
-    end
-
-
-    private
-    
     def parse_uri(url)
-      URI.parse(url.strip)
+      uri = begin 
+        URI.parse(url.strip)
+      rescue URI::InvalidURIError
+        URI.parse(URI.escape(url.strip))
+      end      
+
     rescue URI::InvalidURIError
-      URI.parse(URI.escape(url.strip))
+      raise InvalidLocationError
     end
     
   end
