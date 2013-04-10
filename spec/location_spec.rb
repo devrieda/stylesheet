@@ -13,6 +13,10 @@ describe Location do
       location = Location.new("/some/path.html")
       expect(location.to_s).to eq "/some/path.html"
     end
+    
+    it "should throw error for invalid host" do 
+      expect { Location.new("http://") }.to raise_error(InvalidLocationError)
+    end
   end
   
   describe "#host" do 
@@ -209,6 +213,23 @@ describe Location do
       url = "/services"
       location = Location.new(url)
       expect(location.to_s).to eq url
+    end
+  end
+  
+  describe "#valid?" do 
+    it "should be true with a valid host and protocol" do 
+      location = Location.new("http://initvisual.com")
+      expect(location.valid?).to be_true
+    end
+
+    it "should be false for an invalid host" do 
+      location = Location.new("/asdf")
+      expect(location.valid?).to be_false      
+    end
+
+    it "should be false for an invalid protocol" do 
+      location = Location.new("foo.com/asdf")
+      expect(location.valid?).to be_false
     end
   end
   

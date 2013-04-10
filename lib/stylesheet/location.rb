@@ -19,7 +19,7 @@ module Stylesheet
 
     def protocol=(protocol)
       protocol = protocol.to_s.gsub(":", "")
-      @protocol = protocol + ":"
+      @protocol = "#{protocol}:"
     end
 
     def pathname=(pathname)
@@ -27,7 +27,7 @@ module Stylesheet
     end
 
     def port=(port)
-      @port = port_80? || port_443? ? "" : "#{port}"
+      @port = standard_port? ? "" : "#{port}"
     end
 
     def search=(search)
@@ -40,9 +40,13 @@ module Stylesheet
       @hash = hash && hash != "" ? "##{hash}" : ""
     end
 
+    def valid?
+       valid_protocol? && valid_host?
+    end
+
     def to_s
-      port_w_colon = port     && port     != ""  ? ":#{port}"      : ""
-      scheme       = protocol && protocol != ":" ? "#{protocol}//" : ""
+      port_w_colon = port && port != "" ? ":#{port}"      : ""
+      scheme       = valid_protocol?    ? "#{protocol}//" : ""
 
       "#{scheme}#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
     end
@@ -51,7 +55,19 @@ module Stylesheet
 
 
     private
-
+    
+    def valid_protocol?
+      protocol && protocol != ":"
+    end
+    
+    def valid_host?
+      host && host != ""
+    end
+    
+    def standard_port?
+      port_80? || port_443?
+    end
+    
     def port_80?
       return false unless uri && uri.scheme
       uri.port == 80 && uri.scheme == "http"
@@ -69,8 +85,9 @@ module Stylesheet
         URI.parse(URI.escape(url.strip))
       end      
 
-    rescue URI::InvalidURIError
-      raise InvalidLocationError
+    rescue URI::InvalidURIError => error
+      raise Stylesheet::InvalidLocationError.new(
+        "#{error.class}: #{error.message}")
     end
     
   end
