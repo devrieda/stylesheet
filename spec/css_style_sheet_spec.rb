@@ -15,7 +15,7 @@ describe CssStyleSheet do
 
   describe "#media" do 
     it "returns the list of media types supported for styles" do 
-      # .should be_kind_of(MediaList)
+      # .to be_kind_of(MediaList)
     end
   end
 
@@ -45,13 +45,13 @@ describe CssStyleSheet do
   
   describe "#css_rules" do 
     it "returns a list of css rules found in the style sheet" do 
-      # .should be_kind_of(CSSRuleList)
+      # .to be_kind_of(CSSRuleList)
     end
   end
   
   describe "#rules" do 
     it "is an alias to css rules" do 
-      # .should be_kind_of(CSSRuleList)
+      # .to be_kind_of(CSSRuleList)
     end
   end
   

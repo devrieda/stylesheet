@@ -15,7 +15,7 @@ describe CssStyleRule do
 
   describe "#parent_style_sheet" do 
     it "refers back to the parent style sheet" do 
-      # .should be_kind_of(CSSStyleSheet)
+      # .to be_kind_of(CSSStyleSheet)
     end
   end
 
@@ -27,7 +27,7 @@ describe CssStyleRule do
   
   describe "#style" do 
     it "returns the css style declaration for the rule" do 
-      # .should be_kind_of(CSSStyleDeclaration)
+      # .to be_kind_of(CSSStyleDeclaration)
     end
   end
   

@@ -21,7 +21,7 @@ describe CssStyleDeclaration do
   
   describe "#parent_rule" do 
     it "returns the parent css style rule" do 
-      # .should be_kind_of(CSSStyleRule)
+      # .to be_kind_of(CSSStyleRule)
     end
   end
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CssRuleList do 
   describe "#[]" do 
     it "finds a css style sheet at the given index" do 
-      # .should be_kind_of(CSSStyleRule)
+      # .to be_kind_of(CSSStyleRule)
     end
   end
 
@@ -15,7 +15,7 @@ describe CssRuleList do
   
   describe "#item" do 
     it "finds a css style sheet at the given index" do 
-      # .should be_kind_of(CSSStyleRule)
+      # .to be_kind_of(CSSStyleRule)
     end
   end
 end
