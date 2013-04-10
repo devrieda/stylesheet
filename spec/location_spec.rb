@@ -140,9 +140,9 @@ describe Location do
   end
 
   describe "#href" do 
-    it "should parse out the url href" do 
+    it "should show the stringified version of the url" do 
       location = Location.new(url)
-      expect(location.href).to eq url
+      expect(location.href).to eq "http://initvisual.com/services?foo=bar#abc"
     end
   end
 

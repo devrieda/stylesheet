@@ -7,9 +7,8 @@ module Stylesheet
     alias_method :hostname=, :host=
 
     def initialize(url)      
-      @href     = url
-      @uri      = parse_uri(url)
-      @host     = uri.host
+      @uri  = parse_uri(url)
+      @host = uri.host
 
       self.pathname = uri.path
       self.hash     = uri.fragment
@@ -47,6 +46,8 @@ module Stylesheet
 
       "#{scheme}#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
     end
+    
+    alias_method :href, :to_s
 
 
     private
