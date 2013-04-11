@@ -35,7 +35,7 @@ Get rules defined in a stylesheet:
 
 ```ruby
 sheet = document.style_sheets[0]
-sheet.rules.each do |rule|
+sheet.css_rules.each do |rule|
   puts rule.css_text
   puts rule.selector_text
 end
@@ -45,7 +45,7 @@ Get declarations defined in a style rules:
 
 ```ruby
 sheet = document.style_sheets[0]
-rule  = sheet.rules[0]
+rule  = sheet.css_rules[0]
 puts rule.style[0]
 puts rule.style.border
 ```
