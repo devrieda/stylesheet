@@ -29,6 +29,7 @@ sheet = document.style_sheets[0]
 sheet.media.each do |media| 
   puts media
 end
+```
 
 Get rules defined in a stylesheet: 
 
