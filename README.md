@@ -2,7 +2,7 @@
 
 The Stylesheet gem provides a parser for CSS Stylesheets based on the DOM API
 
-*This Gem is in an extremely experimental state right now*
+**This Gem is in an extremely experimental state right now**
 
 
 ## Examples
