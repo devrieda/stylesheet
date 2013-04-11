@@ -3,10 +3,12 @@ body {
   background-color: #535353;
 }
 
-@import url("master.css");
-@import url('/css_import/stylesheets/fonts.css');
-@import url(http://example.com/css_import/stylesheets/ie.css);
-@import url "images.css";
-@import "borders.css";
-@import colors.css;
+@import url("import1.css");
+@import url('/css_import/stylesheets/import2.css');
+@import url(http://example.com/css_import/stylesheets/import3.css);
+@import "import4.css";
+@import "import5.css" screen;
+@import "import6.css" screen, projection;
+@import url("import7.css") print;
+@import url("import8.css") screen and (orientation:landscape);
 @import url("invalid.css");
