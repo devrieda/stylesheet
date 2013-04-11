@@ -2,6 +2,8 @@
 
 The Stylesheet gem provides a parser for CSS Stylesheets based on the DOM API
 
+*This Gem is in an extremely experimental state right now*
+
 
 ## Examples
 
@@ -45,7 +47,7 @@ sheet = document.style_sheets[0]
 rule  = sheet.rules[0]
 puts rule.style[0]
 puts rule.style.border
-
+```
 
 ## Installation
 
