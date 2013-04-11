@@ -27,12 +27,13 @@ module Stylesheet
   #
   class Request
     def get(url)
-      Curl::Easy.perform(url) do |curl| 
+      curl = Curl::Easy.perform(url) do |curl| 
         curl.headers["User-Agent"] = user_agent
         curl.follow_location       = true
-        curl.verbose               = true
       end
-      
+
+      curl.body_str
+
     rescue Stylsheet::Error
       raise
 
