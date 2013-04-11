@@ -27,8 +27,7 @@ module Stylesheet
            content: style.inner_html, 
            href:    style["href"],
            media:   style["media"],
-           title:   style["title"],
-           type:    style["type"] }
+           title:   style["title"] }
       end
     end
 
