@@ -181,7 +181,32 @@ describe Location do
       expect(location.port).to eq "443"
     end
   end
+  
+  describe "#expand_path!" do 
+    it "should not expand a full url" do 
+      location = Location.new("http://example.com/css/stylesheets/screen.css")
+      parent   = Location.new("http://example.com/css/url.html")
 
+      location.expand_path!(parent)
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"      
+    end
+
+    it "should expand a relative path into a full path given the parent" do 
+      location = Location.new("stylesheets/screen.css")
+      parent   = Location.new("http://example.com/css/relative.html")
+      
+      location.expand_path!(parent)
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
+    end
+
+    it "should expand a absolute path into a full path given the parent" do 
+      location = Location.new("/css/stylesheets/screen.css")      
+      parent   = Location.new("http://example.com/css/absolute.html")
+
+      location.expand_path!(parent)
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
+    end    
+  end
 
   describe "#to_s" do 
     it "should rebuild url from parts" do 

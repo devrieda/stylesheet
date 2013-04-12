@@ -9,7 +9,7 @@ module Stylesheet
     def initialize(url)      
       @uri  = parse_uri(url)
       @host = uri.host
-
+      
       self.pathname = uri.path
       self.hash     = uri.fragment
       self.protocol = uri.scheme
@@ -43,6 +43,14 @@ module Stylesheet
     def valid?
        valid_protocol? && valid_host?
     end
+    
+    def expand_path!(parent_location)
+      return if valid_protocol?
+
+      self.pathname = URI.join(parent_location.to_s, uri.path).path
+      self.protocol = parent_location.protocol
+      self.host     = parent_location.host
+    end
 
     def to_s
       port_w_colon = port && port != "" ? ":#{port}"      : ""
@@ -55,7 +63,7 @@ module Stylesheet
 
 
     private
-    
+
     def valid_protocol?
       protocol && protocol != ":"
     end
