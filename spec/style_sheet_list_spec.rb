@@ -5,10 +5,12 @@ describe StyleSheetList do
     Stylesheet.request = FakeRequest.new
   end
   
+  let(:document) { Document.new("http://example.com/css/html5.html") }
+  
   let(:stylesheets) do 
     StyleSheetList.new([
-      { href:  "http://example.com/css/stylesheets/colors.css", media: "screen" }, 
-      { content: "  div {\n    background-color: #aaa;\n    border: 1px solid #ccc;\n  }"}, 
+      { parent: document, href:  "http://example.com/css/stylesheets/colors.css", media: "screen" }, 
+      { parent: document, content: "  div {\n    background-color: #aaa;\n    border: 1px solid #ccc;\n  }"}, 
     ])
   end
   
