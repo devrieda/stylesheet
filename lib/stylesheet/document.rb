@@ -33,11 +33,11 @@ module Stylesheet
 
     # find all inline styles and build new stylesheet from them
     def inline_styles
-      parser.css("style").map {|style| style }
+      parser.css("style").to_a
     end
 
     def external_styles
-      parser.css("link[rel='stylesheet']").map {|style| style }
+      parser.css("link[rel='stylesheet']").to_a
     end
     
     def request_content
