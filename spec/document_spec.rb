@@ -7,7 +7,7 @@ describe Document do
 
   describe "#location" do 
     it "should build a new Location object from the url" do 
-      url = "http://example.com/css/absolute.html"
+      url = "http://example.com/css/full_url.html"
       doc = Document.new(url)
 
       expect(doc.location).to be_kind_of(Location)
@@ -23,7 +23,7 @@ describe Document do
 
   describe "#text" do 
     it "should request text for document body" do 
-      doc = Document.new("http://example.com/css/absolute.html")
+      doc = Document.new("http://example.com/css/full_url.html")
 
       expect(doc.text).to match /DOCTYPE html/
     end
@@ -44,8 +44,8 @@ describe Document do
   end
 
   describe "#style_sheets" do 
-    it "parses a style sheet list collection from absolute path" do
-      doc = Document.new("http://example.com/css/absolute.html")
+    it "parses a style sheet list collection from url" do
+      doc = Document.new("http://example.com/css/full_url.html")
 
       expect(doc.style_sheets).to be_kind_of(StyleSheetList)
       expect(doc.style_sheets.length).to eq 2
@@ -73,14 +73,14 @@ describe Document do
     end
 
     it "parses a style sheet list collection from relative path" do
-      doc = Document.new("http://example.com/css/relative.html")
+      doc = Document.new("http://example.com/css/relative_path.html")
 
       expect(doc.style_sheets).to be_kind_of(StyleSheetList)
       expect(doc.style_sheets.length).to eq 2
     end
  
-    it "parses a style sheet list collection from relative root path" do
-      doc = Document.new("http://example.com/css/relative_root.html")
+    it "parses a style sheet list collection from absolute path" do
+      doc = Document.new("http://example.com/css/absolute_path.html")
 
       expect(doc.style_sheets).to be_kind_of(StyleSheetList)
       expect(doc.style_sheets.length).to eq 2

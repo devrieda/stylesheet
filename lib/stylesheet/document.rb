@@ -22,7 +22,7 @@ module Stylesheet
     private
 
     def styles 
-      (inline_styles + external_styles).each do |style|
+      (inline_styles + external_styles).map do |style|
          { parent:  self,
            content: style.inner_html, 
            href:    style["href"],
