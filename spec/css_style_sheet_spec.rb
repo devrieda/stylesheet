@@ -1,16 +1,51 @@
 require 'spec_helper'
 
 describe CssStyleSheet do 
+  
+  let(:parent) { Document.new("http://example.com/css/full_url.html") }
+
   describe "#disabled" do 
     it "shows if style sheet is disabled" do 
+      sheet = CssStyleSheet.new(:href => "screen.css", :parent => parent)
+      expect(sheet.disabled?).to be_false
 
+      sheet.disabled = true
+      expect(sheet.disabled?).to be_true
     end
   end
 
   describe "#href" do 
+    let(:document) { Document.new("http://example.com/css/html5.html") }
+    
     it "gives the href of the stylesheet" do 
-
+      path = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      expect(sheet.href).to eq path
     end
+    
+    it "parse the href of the stylesheet for url" do 
+      path = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      expect(sheet.href).to eq path
+    end
+    
+    it "parse the href of the stylesheet for relative style path with parent document" do 
+      path = "stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
+    end
+
+    it "parse the href of the stylesheet for absolute style path with parent document" do 
+      path = "/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
+    end
+
+    it "parse the href of the stylesheet for relative style path with parent style" do 
+    end
+    
+    it "parse the href of the stylesheet for relative root style path with parent style" do       
+    end    
   end
 
   describe "#media" do 
