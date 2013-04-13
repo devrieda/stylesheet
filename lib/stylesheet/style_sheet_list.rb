@@ -1,12 +1,15 @@
 module Stylesheet
-  class StyleSheetList < Array
+  class StyleSheetList
+    extend Forwardable
+    def_delegators :@styles, :length, :[], :each
+    include Enumerable
+    
     def initialize(styles)
       @styles = styles.map {|args| CssStyleSheet.new(args) }
-      super @styles
     end
 
     def item(index)
-      self[index]
+      @styles[index]
     end
   end
 end
