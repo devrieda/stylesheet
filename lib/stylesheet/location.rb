@@ -52,14 +52,14 @@ module Stylesheet
       self.host     = parent_location.host
     end
 
-    def to_s
+    def href
       port_w_colon = port && port != "" ? ":#{port}"      : ""
       scheme       = valid_protocol?    ? "#{protocol}//" : ""
 
       "#{scheme}#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
     end
     
-    alias_method :href, :to_s
+    alias_method :to_s, :href
 
 
     private
