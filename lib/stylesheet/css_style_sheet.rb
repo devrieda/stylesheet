@@ -53,24 +53,21 @@ module Stylesheet
       url_is_empty = !url || url == ""
       return if !parent && url_is_empty
       
-      if !parent
-        @location = Location.new(url)
+      @location = if !parent
+        Location.new(url)
 
       # use parent's url
       elsif url_is_empty
-        @location = parent.location.dup
+        parent.location.dup
 
       # expand path of url based on parent url
       else
-        @location = Location.new(url)
-        @location.expand_path!(parent.location)
+        location = Location.new(url)
+        location.expand_path!(parent.location)
+        location
       end
 
       @location.to_s
-    end
-    
-    def build_media(media)
-      
     end
 
     def request
