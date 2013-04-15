@@ -21,8 +21,13 @@ module Stylesheet
     private
 
     def build_href(url)
+      return url unless parent
+      
+      # use parent's url
       if !url || url == ""
         @location = parent.location.dup
+      
+      # expand path of url based on parent url
       else
         @location = Location.new(url)
         @location.expand_path!(parent.location)
