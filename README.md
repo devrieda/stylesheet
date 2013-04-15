@@ -34,7 +34,7 @@ end
 Get rules defined in a stylesheet: 
 
 ```ruby
-sheet = document.style_sheets[0]
+sheet = Stylesheet::CssStyleSheet.new("http://sportspyder.com/stylesheets/screen.css")
 sheet.css_rules.each do |rule|
   puts rule.css_text
   puts rule.selector_text
