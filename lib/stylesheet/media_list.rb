@@ -1,15 +1,26 @@
 module Stylesheet
   class MediaList
     extend Forwardable
-    def_delegators :@styles, :length, :[], :each
+    def_delegators :@media, :length, :[], :each, :<<, :push, :delete
     include Enumerable
-    
-    def initialize(media)
-      @medias = []
+
+    MEDIA_TYPES = %w{all braille embossed handheld print projection screen speech tty tv}
+
+    def initialize(media_text)
+      @media = media_text.to_s.split(",").map {|medium| medium.strip }
     end
-    
+
     def item(index)
-      @medias[index]
+      @media[index]
     end
+
+    def media_text
+      @media.join(", ")
+    end
+    
+    alias_method :to_s, :media_text
+    
+    alias_method :append_medium, :<<
+    alias_method :delete_medium, :delete    
   end
 end
