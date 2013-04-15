@@ -1,12 +1,27 @@
 module Stylesheet
   class CssStyleSheet
-    attr_accessor :url, :parent
+    attr_accessor :url, :parent, :title, :type
     attr_reader :href, :location
     attr_writer :disabled
     
     def initialize(args)
-      @parent   = args[:parent]
-      self.href = args[:href]
+      if args.kind_of?(String)
+        init_with_url(args)
+      else
+        init_with_hash(args)
+      end
+    end
+    
+    def init_with_url(url)
+      @type = "text/css"
+      self.href = url
+    end
+    
+    def init_with_hash(args)
+      @parent = args[:parent]
+      @title  = args[:title]
+      @type   = args[:type] || "text/css"
+      self.href = args[:href]      
     end
 
     def disabled?
@@ -15,6 +30,13 @@ module Stylesheet
     
     def href=(url)
       @href = build_href(url)
+    end
+    
+    def media
+      
+    end
+    
+    def parent_style_sheet
     end
 
 

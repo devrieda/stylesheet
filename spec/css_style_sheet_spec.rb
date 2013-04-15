@@ -14,19 +14,27 @@ describe CssStyleSheet do
     end
   end
 
+  describe ".new" do 
+    it "should initialize with a url string" do 
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(url)
+      expect(sheet.href).to eq url
+    end
+
+    it "should initialize with hash options" do 
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url)
+      expect(sheet.href).to eq url
+    end
+  end
+
   describe "#href" do 
     let(:document) { Document.new("http://example.com/css/html5.html") }
     
-    it "gives the href of the stylesheet" do 
-      path = "http://example.com/css/stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => path, :parent => document)
-      expect(sheet.href).to eq path
-    end
-    
     it "parse the href of the stylesheet for url" do 
-      path = "http://example.com/css/stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => path, :parent => document)
-      expect(sheet.href).to eq path
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url)
+      expect(sheet.href).to eq url
     end
     
     it "parse the href of the stylesheet for relative style path with parent document" do 
@@ -50,6 +58,8 @@ describe CssStyleSheet do
 
   describe "#media" do 
     it "returns the list of media types supported for styles" do 
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url)
       # .to be_kind_of(MediaList)
     end
   end
@@ -68,13 +78,23 @@ describe CssStyleSheet do
 
   describe "#title" do 
     it "returns the title of the stylesheet" do 
-
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url, :title => "My Styles")
+      expect(sheet.title).to eq "My Styles"
     end
   end
   
   describe "#type" do 
     it "returns the type of the stylesheet" do 
-
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url, :type => "text/css")
+      expect(sheet.type).to eq "text/css"
+    end
+    
+    it "defaults to text/css for the type" do 
+      url = "http://example.com/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => url)
+      expect(sheet.type).to eq "text/css"
     end
   end
   
