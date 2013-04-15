@@ -13,7 +13,7 @@ describe StyleSheetList do
     { content: "div {\n  background-color: #aaa;\n  border: 1px solid #ccc;\n}"}
   end
 
-  describe "initialize" do 
+  describe ".new" do 
     it "should initialize a new style sheet list " do 
       stylesheets = StyleSheetList.new([external, inline])
       expect(stylesheets).to be_kind_of(StyleSheetList)
