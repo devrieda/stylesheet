@@ -2,11 +2,9 @@ require 'spec_helper'
 
 describe CssStyleSheet do 
   
-  let(:parent) { Document.new("http://example.com/css/full_url.html") }
-
   describe "#disabled" do 
     it "shows if style sheet is disabled" do 
-      sheet = CssStyleSheet.new(:href => "screen.css", :parent => parent)
+      sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
       expect(sheet.disabled?).to be_false
 
       sheet.disabled = true
@@ -15,6 +13,12 @@ describe CssStyleSheet do
   end
 
   describe ".new" do 
+    it "should initialize with no url" do 
+      css = "div {\n  background-color: #aaa;\n  border: 1px solid #ccc;\n}"
+      sheet = CssStyleSheet.new(content: css)
+      expect(sheet.href).to be_nil
+    end
+    
     it "should initialize with a url string" do 
       url = "http://example.com/css/stylesheets/screen.css"
       sheet = CssStyleSheet.new(url)
@@ -29,38 +33,50 @@ describe CssStyleSheet do
   end
 
   describe "#href" do 
-    let(:document) { Document.new("http://example.com/css/html5.html") }
-    
     it "parse the href of the stylesheet for url" do 
-      url = "http://example.com/css/stylesheets/screen.css"
+      url   = "http://example.com/css/stylesheets/screen.css"
       sheet = CssStyleSheet.new(:href => url)
+
       expect(sheet.href).to eq url
     end
     
     it "parse the href of the stylesheet for relative style path with parent document" do 
-      path = "stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      parent = Document.new("http://example.com/css/html5.html")
+      path   = "stylesheets/screen.css"
+      sheet  = CssStyleSheet.new(:href => path, :parent => parent)
+
       expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
     end
 
     it "parse the href of the stylesheet for absolute style path with parent document" do 
-      path = "/css/stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => path, :parent => document)
+      parent = Document.new("http://example.com/css/html5.html")
+      path   = "/css/stylesheets/screen.css"
+      sheet = CssStyleSheet.new(:href => path, :parent => parent)
+
       expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
     end
 
     it "parse the href of the stylesheet for relative style path with parent style" do 
+      parent = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
+      path   = "print.css"
+      sheet  = CssStyleSheet.new(:href => path, :parent => parent)
+
+      expect(sheet.href).to eq "http://example.com/css/stylesheets/print.css"    
     end
     
-    it "parse the href of the stylesheet for relative root style path with parent style" do       
+    it "parse the href of the stylesheet for relative root style path with parent style" do
+      parent = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
+      path   = "/css/stylesheets/print.css"
+      sheet  = CssStyleSheet.new(:href => path, :parent => parent)
+
+      expect(sheet.href).to eq "http://example.com/css/stylesheets/print.css"      
     end    
   end
 
   describe "#media" do 
     it "returns the list of media types supported for styles" do 
-      url = "http://example.com/css/stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => url)
-      # .to be_kind_of(MediaList)
+      sheet = CssStyleSheet.new(:href => "http://example.com/css/stylesheets/screen.css")
+      expect(sheet.media).to be_kind_of(MediaList)
     end
   end
 
@@ -92,8 +108,7 @@ describe CssStyleSheet do
     end
     
     it "defaults to text/css for the type" do 
-      url = "http://example.com/css/stylesheets/screen.css"
-      sheet = CssStyleSheet.new(:href => url)
+      sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
       expect(sheet.type).to eq "text/css"
     end
   end
