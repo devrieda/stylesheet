@@ -1,7 +1,7 @@
 module Stylesheet
   class CssStyleSheet
     attr_accessor :url, :parent, :title
-    attr_reader :href, :media, :location
+    attr_reader :href, :media, :location, :content
     attr_writer :disabled, :type
     
     def initialize(args)
@@ -18,12 +18,13 @@ module Stylesheet
     end
     
     def init_with_hash(args)
-      @parent = args[:parent]
-      @title  = args[:title]
-      @type   = args[:type]
+      @parent  = args[:parent]
+      @title   = args[:title]
+      @type    = args[:type]
 
-      self.media = args[:media]
-      self.href  = args[:href]      
+      self.media   = args[:media]
+      self.href    = args[:href]
+      self.content = args[:content]
     end
 
     def disabled?
@@ -42,8 +43,18 @@ module Stylesheet
       @media ||= MediaList.new(media)
     end
     
-    def parent_style_sheet
+    def content=(content)
+      @content = content || request_content
+    end
 
+    def css_rules
+      @css_rules ||= CssRuleList.new(content)
+    end
+    
+    alias_method :rules, :css_rules 
+
+    def parent_style_sheet
+      parent
     end
 
 
@@ -68,6 +79,11 @@ module Stylesheet
       end
 
       @location.to_s
+    end
+    
+    def request_content
+      raise InvalidLocationError unless location.valid?
+      request.get(location.href)
     end
 
     def request

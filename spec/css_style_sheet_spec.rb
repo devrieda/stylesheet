@@ -115,13 +115,15 @@ describe CssStyleSheet do
   
   describe "#css_rules" do 
     it "returns a list of css rules found in the style sheet" do 
-      # .to be_kind_of(CSSRuleList)
+      sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
+      expect(sheet.css_rules).to be_kind_of(CssRuleList)
     end
   end
   
   describe "#rules" do 
     it "is an alias to css rules" do 
-      # .to be_kind_of(CSSRuleList)
+      sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
+      expect(sheet.rules).to be_kind_of(CssRuleList)
     end
   end
   
