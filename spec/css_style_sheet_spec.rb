@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe CssStyleSheet do 
+  before(:each) do 
+    Stylesheet.request = FakeRequest.new
+  end
   
   describe "#disabled" do 
     it "shows if style sheet is disabled" do 
