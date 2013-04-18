@@ -20,7 +20,9 @@ describe CssRuleList do
     }
 
     @media only screen and (max-width: 850px) {
-      font-weight: bold;
+      #main .section {
+        font-weight: bold;
+      }
     }
     
     @font-face {

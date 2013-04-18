@@ -50,9 +50,9 @@ module Stylesheet
     end
 
     def css_rules
-      @css_rules ||= CssRuleList.new(content)
+      @css_rules ||= CssRuleList.new(content, self)
     end
-    
+
     alias_method :rules, :css_rules 
 
     def parent_style_sheet
