@@ -6,13 +6,53 @@ module Stylesheet
     MEDIA_RULE     = 4
     FONT_FACE_RULE = 5
 
-    attr_accessor :css_text, :parent_rule, :parent_style_sheet, :type
+    attr_accessor :parent_style_sheet, :parent_rule
+    attr_writer :type
+    attr_reader :css_text
+
+
+    # keep track of subclasses for factory
+    class << self
+      attr_reader :rule_classes
+    end
+
+    @rule_classes = []
+
+    def self.inherited(subclass)
+      CssRule.rule_classes << subclass
+    end
+
+    def self.factory(args)
+      rule = CssRule.rule_classes.find do |klass| 
+        klass.matches_rule?(args[:css_text])
+      end
+      rule.new(args) if rule
+    end
+
 
     def initialize(args)
-      @css_text           = args[:css_text]
-      @parent_rule        = args[:parent_rule]
+      self.css_text       = args[:css_text]
       @parent_style_sheet = args[:parent_style_sheet]
-      @type               = args[:type]
+      @parent_rule        = args[:parent_rule]
+    end
+
+    def css_text=(css_text)
+      @css_text = css_text
+      parse_css_text
+    end
+
+    def type
+      raise NotImplementedError
+    end
+
+    def matches_rule?
+      false
+    end
+
+    private
+
+    def parse_css_text(css_text)
+      raise NotImplementedError
     end
   end
 end
