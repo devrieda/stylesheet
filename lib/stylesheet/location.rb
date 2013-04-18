@@ -10,11 +10,15 @@ module Stylesheet
       @uri  = parse_uri(url)
       @host = uri.host
       
-      self.pathname = uri.path
-      self.hash     = uri.fragment
+      self.init_from_uri
+    end
+    
+    def init_from_uri
       self.protocol = uri.scheme
-      self.search   = uri.query
+      self.pathname = uri.path
       self.port     = uri.port
+      self.search   = uri.query
+      self.hash     = uri.fragment
     end
 
     def protocol=(protocol)
@@ -77,13 +81,11 @@ module Stylesheet
     end
     
     def port_80?
-      return false unless uri && uri.scheme
-      uri.port == 80 && uri.scheme == "http"
+      uri && uri.port == 80 && uri.scheme == "http"
     end
 
     def port_443?
-      return false unless uri && uri.scheme == "https"
-      uri.port == 443 && uri.scheme == "https"
+      uri && uri.port == 443 && uri.scheme == "https"
     end
 
     def parse_uri(url)
@@ -93,6 +95,7 @@ module Stylesheet
         URI.parse(URI.escape(url.strip))
       end      
 
+    # re-raise external library errors in our namespace
     rescue URI::InvalidURIError => error
       raise Stylesheet::InvalidLocationError.new(
         "#{error.class}: #{error.message}")
