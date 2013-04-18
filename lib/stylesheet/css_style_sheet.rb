@@ -1,7 +1,7 @@
 module Stylesheet
   class CssStyleSheet
-    attr_accessor :url, :parent, :title
-    attr_reader :href, :media, :location, :content
+    attr_accessor :parent, :title
+    attr_reader :url, :href, :media, :content
     attr_writer :disabled, :type
     
     def initialize(args)
@@ -13,8 +13,9 @@ module Stylesheet
     end
     
     def init_with_url(url)
-      self.media = ""
-      self.href  = url
+      self.href    = url
+      self.media   = ""
+      self.content = nil
     end
     
     def init_with_hash(args)
@@ -22,8 +23,8 @@ module Stylesheet
       @title   = args[:title]
       @type    = args[:type]
 
-      self.media   = args[:media]
       self.href    = args[:href]
+      self.media   = args[:media]
       self.content = args[:content]
     end
 
@@ -36,6 +37,7 @@ module Stylesheet
     end
     
     def href=(url)
+      @url  = url
       @href = build_href(url)
     end
     
@@ -56,31 +58,46 @@ module Stylesheet
     def parent_style_sheet
       parent
     end
+    
+    def location
+      @location ||= if standalone_css?
+        Location.new(url)
 
+      elsif inline_css?
+        parent.location.dup
+
+      else
+        expanded_location(url)
+      end
+    end
+    
 
     private
 
+    # expand path of url based on parent url
+    def expanded_location(url)
+      location = Location.new(url)
+      location.expand_path!(parent.location)
+      location      
+    end
+
     def build_href(url)
-      url_is_empty = !url || url == ""
-      return if !parent && url_is_empty
-      
-      @location = if !parent
-        Location.new(url)
+      return if !parent && empty_url?
+      location.to_s
+    end
 
-      # use parent's url
-      elsif url_is_empty
-        parent.location.dup
-
-      # expand path of url based on parent url
-      else
-        location = Location.new(url)
-        location.expand_path!(parent.location)
-        location
-      end
-
-      @location.to_s
+    def standalone_css?
+      !parent
     end
     
+    def inline_css?
+      empty_url?
+    end
+    
+    def empty_url?
+      !url || url == ""
+    end
+
     def request_content
       raise InvalidLocationError unless location.valid?
       request.get(location.href)
