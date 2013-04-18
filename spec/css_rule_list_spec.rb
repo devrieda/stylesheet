@@ -69,13 +69,15 @@ describe CssRuleList do
 
   describe "#length" do 
     it "returns number of items" do 
-      
+      rules = CssRuleList.new(styles)
+      expect(rules.length).to eq 8
     end
   end
   
   describe "#item" do 
     it "finds a css style sheet at the given index" do 
-      # .to be_kind_of(CSSStyleRule)
+      rules = CssRuleList.new(styles)
+      expect(rules.item(0)).to be_kind_of(CssRule)
     end
   end
 end
