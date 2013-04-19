@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Location do 
   let(:url) { "http://initvisual.com:80/services?foo=bar#abc" }
 
-  describe "#new" do 
+  describe "#new without parent" do 
     it "should parse out parts of url" do 
       location = Location.new(url)
       expect(location.host).to eq "initvisual.com"
@@ -19,6 +19,31 @@ describe Location do
     end
   end
   
+  
+  describe "#new with parent" do 
+    it "should not expand a full url" do 
+      parent   = Location.new("http://example.com/css/url.html")
+      location = Location.new("http://example.com/css/stylesheets/screen.css", parent)
+
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"      
+    end
+
+    it "should expand a relative path into a full path given the parent" do 
+      parent   = Location.new("http://example.com/css/relative.html")
+      location = Location.new("stylesheets/screen.css", parent)
+      
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
+    end
+
+    it "should expand a absolute path into a full path given the parent" do 
+      parent   = Location.new("http://example.com/css/absolute.html")
+      location = Location.new("/css/stylesheets/screen.css", parent)
+
+      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
+    end    
+  end
+  
+
   describe "#host" do 
     it "should parse out the url host" do 
       location = Location.new(url)
@@ -180,32 +205,6 @@ describe Location do
       location = Location.new(url)
       expect(location.port).to eq "443"
     end
-  end
-  
-  describe "#expand_path!" do 
-    it "should not expand a full url" do 
-      location = Location.new("http://example.com/css/stylesheets/screen.css")
-      parent   = Location.new("http://example.com/css/url.html")
-
-      location.expand_path!(parent)
-      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"      
-    end
-
-    it "should expand a relative path into a full path given the parent" do 
-      location = Location.new("stylesheets/screen.css")
-      parent   = Location.new("http://example.com/css/relative.html")
-      
-      location.expand_path!(parent)
-      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
-    end
-
-    it "should expand a absolute path into a full path given the parent" do 
-      location = Location.new("/css/stylesheets/screen.css")      
-      parent   = Location.new("http://example.com/css/absolute.html")
-
-      location.expand_path!(parent)
-      expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
-    end    
   end
 
   describe "#to_s" do 

@@ -1,16 +1,18 @@
 module Stylesheet
   class Location
     attr_accessor :uri, :host, :href
-    attr_reader :hash, :pathname, :port, :protocol, :search
+    attr_reader :hash, :pathname, :port, :protocol, :search, :parent
 
     alias_method :hostname,  :host
     alias_method :hostname=, :host=
 
-    def initialize(url)      
-      @uri  = parse_uri(url)
-      @host = uri.host
-      
+    def initialize(url, parent = nil)      
+      @uri    = parse_uri(url)
+      @host   = uri.host
+      @parent = parent
+
       self.init_from_uri
+      self.expand_paths_from_parent
     end
     
     def init_from_uri
@@ -48,17 +50,18 @@ module Stylesheet
        valid_protocol? && valid_host?
     end
     
-    def expand_path!(parent_location)
+    def expand_paths_from_parent
       return if valid_protocol?
+      return unless parent
 
-      self.pathname = URI.join(parent_location.to_s, uri.path).path
-      self.protocol = parent_location.protocol
-      self.host     = parent_location.host
+      self.pathname = URI.join(parent.to_s, uri.path).path
+      self.protocol = parent.protocol
+      self.host     = parent.host
     end
 
     def href
-      port_w_colon = port && port != "" ? ":#{port}"      : ""
-      scheme       = valid_protocol?    ? "#{protocol}//" : ""
+      port_w_colon = valid_port?     ? ":#{port}"      : ""
+      scheme       = valid_protocol? ? "#{protocol}//" : ""
 
       "#{scheme}#{host}#{port_w_colon}#{pathname}#{search}#{hash}"
     end
@@ -74,6 +77,10 @@ module Stylesheet
     
     def valid_host?
       host && host != ""
+    end
+    
+    def valid_port?
+      port && port != ""
     end
     
     def standard_port?
