@@ -12,13 +12,6 @@ describe CssRuleList do
 
     @import url(\"import1.css\");
 
-    a:link { 
-      color: #357ad1; 
-    }
-    a:visited { 
-      color: #77abf0; 
-    }
-
     @media only screen and (max-width: 850px) {
       #main .section {
         font-weight: bold;
@@ -28,10 +21,6 @@ describe CssRuleList do
     @font-face {
       font-family: \"Bitstream Vera Serif Bold\";
       src: url(\"http://example.com/fonts/VeraSeBd.ttf\");
-    }
-
-    a:hover {
-      color: #333;
     }"
   end
   
@@ -40,25 +29,25 @@ describe CssRuleList do
       rules = CssRuleList.new(styles)
       expect(rules[0]).to be_kind_of(CssCharsetRule)
     end
-    
+
+    it "parses style rules" do 
+      rules = CssRuleList.new(styles)
+      expect(rules[1]).to be_kind_of(CssStyleRule)
+    end
+
     it "parses import rules" do 
       rules = CssRuleList.new(styles)
       expect(rules[2]).to be_kind_of(CssImportRule)
     end
+
+    it "parses media rules" do 
+      rules = CssRuleList.new(styles)
+      expect(rules[3]).to be_kind_of(CssMediaRule)
+    end
     
     it "parses font face rules" do 
       rules = CssRuleList.new(styles)
-      expect(rules[6]).to be_kind_of(CssFontFaceRule)
-    end
-    
-    it "parses media rules" do 
-      rules = CssRuleList.new(styles)
-      expect(rules[5]).to be_kind_of(CssMediaRule)
-    end
-    
-    it "parses style rules" do 
-      rules = CssRuleList.new(styles)
-      expect(rules[1]).to be_kind_of(CssStyleRule)
+      expect(rules[4]).to be_kind_of(CssFontFaceRule)
     end
   end
   
@@ -72,7 +61,7 @@ describe CssRuleList do
   describe "#length" do 
     it "returns number of items" do 
       rules = CssRuleList.new(styles)
-      expect(rules.length).to eq 8
+      expect(rules.length).to eq 5
     end
   end
   
