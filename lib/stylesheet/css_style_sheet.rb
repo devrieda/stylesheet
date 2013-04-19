@@ -60,26 +60,11 @@ module Stylesheet
     end
     
     def location
-      @location ||= if standalone_css?
-        Location.new(url)
-
-      elsif inline_css?
-        parent.location.dup
-
-      else
-        expanded_location(url)
-      end
+      return if inline_css?
+      @location ||= Location.new(url, parent && parent.location)
     end
-    
 
     private
-
-    # expand path of url based on parent url
-    def expanded_location(url)
-      location = Location.new(url)
-      location.expand_path!(parent.location)
-      location      
-    end
 
     def build_href(url)
       return if !parent && empty_url?

@@ -16,9 +16,9 @@ describe CssStyleSheet do
   end
 
   describe ".new" do 
-    it "should initialize with no url" do 
+    it "should initialize with inline styles" do 
       css = "div {\n  background-color: #aaa;\n  border: 1px solid #ccc;\n}"
-      sheet = CssStyleSheet.new(content: css)
+      sheet = CssStyleSheet.new(:content => css)
       expect(sheet.href).to be_nil
     end
     
@@ -36,14 +36,21 @@ describe CssStyleSheet do
   end
 
   describe "#href" do 
-    it "parse the href of the stylesheet for url" do 
+    it "parses the href of the stylesheet for url" do 
       url   = "http://example.com/css/stylesheets/screen.css"
       sheet = CssStyleSheet.new(:href => url)
 
       expect(sheet.href).to eq url
     end
     
-    it "parse the href of the stylesheet for relative style path with parent document" do 
+    it "parses the href as nil for inline stylesheets" do 
+      css = "div {\n  background-color: #aaa;\n  border: 1px solid #ccc;\n}"
+      sheet = CssStyleSheet.new(:content => css)
+
+      expect(sheet.href).to be_nil
+    end
+
+    it "parses the href of the stylesheet for relative style path with parent document" do 
       parent = Document.new("http://example.com/css/html5.html")
       path   = "stylesheets/screen.css"
       sheet  = CssStyleSheet.new(:href => path, :parent => parent)
@@ -51,7 +58,7 @@ describe CssStyleSheet do
       expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
     end
 
-    it "parse the href of the stylesheet for absolute style path with parent document" do 
+    it "parses the href of the stylesheet for absolute style path with parent document" do 
       parent = Document.new("http://example.com/css/html5.html")
       path   = "/css/stylesheets/screen.css"
       sheet = CssStyleSheet.new(:href => path, :parent => parent)
@@ -59,7 +66,7 @@ describe CssStyleSheet do
       expect(sheet.href).to eq "http://example.com/css/stylesheets/screen.css"
     end
 
-    it "parse the href of the stylesheet for relative style path with parent style" do 
+    it "parses the href of the stylesheet for relative style path with parent style" do 
       parent = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
       path   = "print.css"
       sheet  = CssStyleSheet.new(:href => path, :parent => parent)
@@ -67,7 +74,7 @@ describe CssStyleSheet do
       expect(sheet.href).to eq "http://example.com/css/stylesheets/print.css"    
     end
     
-    it "parse the href of the stylesheet for relative root style path with parent style" do
+    it "parses the href of the stylesheet for relative root style path with parent style" do
       parent = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
       path   = "/css/stylesheets/print.css"
       sheet  = CssStyleSheet.new(:href => path, :parent => parent)
