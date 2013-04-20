@@ -1,7 +1,7 @@
 module Stylesheet
   class CssStyleSheet
     attr_accessor :parent, :title
-    attr_reader :url, :href, :media, :content
+    attr_reader :href, :media, :content
     attr_writer :disabled, :type
     
     def initialize(args)
@@ -22,10 +22,11 @@ module Stylesheet
       @parent  = args[:parent]
       @title   = args[:title]
       @type    = args[:type]
-
-      self.href    = args[:href]
-      self.media   = args[:media]
-      self.content = args[:content]
+      
+      self.href     = args[:href]
+      self.location = args[:location]
+      self.media    = args[:media]
+      self.content  = args[:content]
     end
 
     def disabled?
@@ -37,8 +38,9 @@ module Stylesheet
     end
     
     def href=(url)
+      return unless url
       @url  = url
-      @href = build_href(url)
+      @href = location.to_s
     end
     
     def media=(media)
@@ -59,28 +61,29 @@ module Stylesheet
       parent
     end
     
+    protected 
+
     def location
       return if inline_css?
-      @location ||= Location.new(url, parent && parent.location)
+      @location ||= Location.new(@url, parent && parent.location)
+    end
+    
+    def location=(location)
+      return unless location
+
+      @location = location
+      @url      = location.href
+      @href     = location.href
     end
 
     private
-
-    def build_href(url)
-      return if !parent && empty_url?
-      location.to_s
-    end
 
     def standalone_css?
       !parent
     end
     
     def inline_css?
-      empty_url?
-    end
-    
-    def empty_url?
-      !url || url == ""
+      !@url || @url == ""
     end
 
     def request_content

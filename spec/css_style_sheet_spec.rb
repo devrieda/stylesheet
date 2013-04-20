@@ -34,7 +34,7 @@ describe CssStyleSheet do
       expect(sheet.href).to eq url
     end
   end
-
+  
   describe "#href" do 
     it "parses the href of the stylesheet for url" do 
       url   = "http://example.com/css/stylesheets/screen.css"
