@@ -20,6 +20,16 @@ describe Document do
       expect(doc.location.href).to eq "/asdf"
     end
   end
+  
+  describe "#location" do 
+    it "should assign a new location" do 
+      url = "http://example.com/css/full_url.html"
+      doc = Document.new
+      doc.location = Location.new(url)
+      
+      expect(doc.location.href).to eq url
+    end
+  end
 
   describe "#text" do 
     it "should request text for document body" do 

@@ -1,13 +1,16 @@
 module Stylesheet
   class Document
-    attr_accessor :url
-    
-    def initialize(url)
+
+    def initialize(url=nil)
       @url = url
     end
 
     def location
-      @location ||= Location.new(url)
+      @location ||= Location.new(@url)
+    end
+    
+    def location=(location)
+      @location = location
     end
 
     def text 
