@@ -16,7 +16,7 @@ module Stylesheet
     
     def parse(rules, parent)
       # clean extraneous whitespace
-      rules = rules.to_s.gsub("\n", "").gsub(/\s+/, " ").gsub(/([\};])\s/, '\1')
+      rules = rules.to_s.gsub(/\s+/m, " ").gsub(/([\};])\s/, '\1')
 
       directive_re = "@.+?;"
       rules_re     = ".+?\{.+?\}"
