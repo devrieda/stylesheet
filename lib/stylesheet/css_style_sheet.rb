@@ -61,8 +61,6 @@ module Stylesheet
       parent
     end
     
-    protected 
-
     def location
       return if inline_css?
       @location ||= Location.new(@url, parent && parent.location)
