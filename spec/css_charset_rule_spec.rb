@@ -14,6 +14,12 @@ describe CssCharsetRule do
     end
   end
   
+  describe "#encoding" do 
+    it "should return specified encoding" do 
+      expect(rule.encoding).to eq "UTF-8"
+    end
+  end
+
   describe ".matches_rule?" do 
     it "should match text starting with @charset" do 
       matches = CssCharsetRule.matches_rule?(css_text)
