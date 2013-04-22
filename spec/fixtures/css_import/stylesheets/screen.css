@@ -1,8 +1,3 @@
-body {
-  color: #444;
-  background-color: #535353;
-}
-
 @import url("import1.css");
 @import url('/css_import/stylesheets/import2.css');
 @import url(http://example.com/css_import/stylesheets/import3.css);
@@ -12,3 +7,9 @@ body {
 @import url("import7.css") print;
 @import url("import8.css") screen and (orientation:landscape);
 @import url("invalid.css");
+
+body {
+  color: #444;
+  background-color: #535353;
+}
+
