@@ -35,10 +35,7 @@ module Stylesheet
     end
     
     def parse_css_text
-      selector, href, media = css_text.split(" ", 3)
-
-      self.href  = href
-      self.media = media
+      selector, self.href, self.media = css_text.gsub(";", "").split(" ", 3)
     end
   end
 end

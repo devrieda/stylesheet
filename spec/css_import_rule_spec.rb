@@ -13,7 +13,7 @@ describe CssImportRule do
     end
   end
 
-  describe "#href" do  
+  describe "#href" do 
     let(:parent) do 
       CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
     end
@@ -111,10 +111,48 @@ describe CssImportRule do
   end
 
   describe "#style_sheet" do 
-    
+    let(:parent) do 
+      CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
+    end
+
+    it "should return a style sheet based on the href" do 
+      css_text = "@import url(\"import1.css\");" 
+
+      rule  = CssImportRule.new(:css_text => css_text, :parent_style_sheet => parent)
+      style = rule.style_sheet
+
+      expect(style).to be_kind_of(CssStyleSheet)
+      expect(style.href).to eq "http://example.com/css_import/stylesheets/import1.css"
+    end
   end
   
   describe "#media" do 
+    let(:parent) { Object.new }
+    
+    it "should parse a single medium" do 
+      css_text = '@import url("import1.css") screen;'
+
+      rule = CssImportRule.new(:css_text => css_text, :parent_style_sheet => parent)
+      expect(rule.media.length).to eq 1
+      expect(rule.media[0]).to eq "screen"
+    end
+
+    it "should parse multiple media" do 
+      css_text = '@import url("import1.css") screen,projection;'
+
+      rule = CssImportRule.new(:css_text => css_text, :parent_style_sheet => parent)
+      expect(rule.media.length).to eq 2
+      expect(rule.media[0]).to eq "screen"
+    end
+    
+    it "should parse media with media query" do 
+      css_text = '@import url("import1.css") screen and (orientation:landscape);'
+
+      rule = CssImportRule.new(:css_text => css_text, :parent_style_sheet => parent)
+      expect(rule.media.length).to eq 1
+      expect(rule.media[0]).to eq "screen and (orientation:landscape)"
+    end
+    
   end
   
   describe ".matches_rule?" do 
