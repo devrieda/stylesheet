@@ -3,10 +3,6 @@ module Stylesheet
     
     attr_reader :content
 
-    def initialize(args)
-      super
-    end
-    
     def type
       CssRule::MEDIA_RULE
     end

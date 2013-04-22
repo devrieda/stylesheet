@@ -1,12 +1,8 @@
 module Stylesheet
   class CssImportRule < CssRule
-    
+
     attr_reader :media
-    
-    def initialize(args)
-      super
-    end
-    
+
     def type
       CssRule::IMPORT_RULE
     end

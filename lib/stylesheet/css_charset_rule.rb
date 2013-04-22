@@ -1,10 +1,6 @@
 module Stylesheet
   class CssCharsetRule < CssRule
     
-    def initialize(args)
-      super
-    end
-    
     def type
       CssRule::CHARSET_RULE
     end
