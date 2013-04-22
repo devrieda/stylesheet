@@ -12,7 +12,7 @@ module Stylesheet
     end
 
     def href
-      @location.href
+      @href
     end
 
     def style_sheet
@@ -23,31 +23,26 @@ module Stylesheet
       text.include?("@import")
     end
 
-    private
-
-    def href=(url)
-      @url  = url
-      @href = location.to_s
-    end
-
-    def media=(media)
-      @media ||= MediaList.new(media)
-    end
-    
     def location
-      @location ||= Location.new(@url.gsub(/url\(|\)|['";]+/, ""), 
+      @location ||= Location.new(@href,
         parent_style_sheet && parent_style_sheet.location)
     end
 
-    def parse_css_text
-      selector, url, media = css_text.split(" ", 3)
+    private
 
-      self.href  = url
-      self.media = media
+    def href=(url)
+      @href = url.gsub(/url\(|\)|['";]+/, "")
+    end
+
+    def media=(media)
+      @media = MediaList.new(media)
     end
     
-    def request
-      @request ||= Stylesheet.request
+    def parse_css_text
+      selector, href, media = css_text.split(" ", 3)
+
+      self.href  = href
+      self.media = media
     end
   end
 end
