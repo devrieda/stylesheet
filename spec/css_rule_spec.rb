@@ -47,8 +47,9 @@ describe CssRule do
     end
 
     it "should build an a css import rule" do 
+      parent = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
       rule = CssRule.factory(:css_text           => import_text, 
-                             :parent_style_sheet => Object.new)
+                             :parent_style_sheet => parent)
       expect(rule).to be_kind_of(CssImportRule)
     end
 

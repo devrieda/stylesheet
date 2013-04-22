@@ -6,9 +6,8 @@ module Stylesheet
     MEDIA_RULE     = 4
     FONT_FACE_RULE = 5
 
-    attr_accessor :parent_style_sheet, :parent_rule
     attr_writer :type
-    attr_reader :css_text
+    attr_reader :parent_style_sheet, :parent_rule, :css_text
 
 
     # keep track of subclasses for factory
@@ -31,13 +30,9 @@ module Stylesheet
 
 
     def initialize(args)
-      self.css_text       = args[:css_text]
       @parent_style_sheet = args[:parent_style_sheet]
       @parent_rule        = args[:parent_rule]
-    end
-
-    def css_text=(css_text)
-      @css_text = css_text
+      @css_text           = args[:css_text]
       parse_css_text
     end
 
