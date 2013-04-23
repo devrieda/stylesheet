@@ -13,7 +13,8 @@ module Stylesheet
     end
     
     def style
-      CssStyleDeclaration.new
+      CssStyleDeclaration.new(:css_text    => @declarations, 
+                              :parent_rule => self)
     end
 
     def self.matches_rule?(text)
@@ -27,6 +28,7 @@ module Stylesheet
 
       selector, declarations = css_text.split("{")
       @selector_text = selector.strip
+      @declarations  = declarations.gsub(/\}\s*$/, "")
     end
   end
 end
