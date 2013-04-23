@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe CssImportRule do
+  before(:each) do 
+    Stylesheet.request = FakeRequest.new
+  end
+
   let(:css_text) { "@import url(\"import1.css\");" }
 
   let(:rule) do 
