@@ -15,7 +15,10 @@ describe CssFontFaceRule do
 
   describe "#style" do 
     it "returns the css style declaration for the rule" do 
-      expect(rule.style).to be_kind_of(CssStyleDeclaration)
+      style = rule.style
+
+      expect(style).to be_kind_of(CssStyleDeclaration)
+      expect(style.length).to eq 2
     end
   end
 
@@ -24,7 +27,7 @@ describe CssFontFaceRule do
       expect(rule.type).to eq CssRule::FONT_FACE_RULE
     end
   end
-  
+
   describe ".matches_rule?" do 
     it "should match text starting with @font-face" do 
       matches = CssFontFaceRule.matches_rule?(css_text)
