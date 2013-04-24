@@ -18,7 +18,10 @@ describe CssStyleRule do
 
   describe "#style" do 
     it "returns the css style declaration for the rule" do 
-      expect(rule.style).to be_kind_of(CssStyleDeclaration)
+      style = rule.style
+
+      expect(style).to be_kind_of(CssStyleDeclaration)
+      expect(style.length).to eq 2
     end
   end
   
