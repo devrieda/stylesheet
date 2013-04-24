@@ -12,7 +12,8 @@ module Stylesheet
     end
 
     def css_text=(css_text)
-      @declarations = css_text.to_s.split(";").map {|d| d.strip }
+      declarations = css_text.to_s.split(";")
+      @declarations = declarations.map {|d| d.strip }.select {|d| d && d != "" }
     end
 
     def css_text
@@ -21,9 +22,8 @@ module Stylesheet
     end
 
     alias_method :to_s, :css_text
-    
+
     def method_missing
-      
     end
   end
 end

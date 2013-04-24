@@ -7,18 +7,18 @@ describe CssStyleDeclaration do
      font-family: Arial, Verdana;
      border-left: 1px solid red;
      border-right-width: 1px;
-     background-color: #535353"
+     background-color: #535353;"
   end
 
   let(:rule) do 
     CssStyleRule.new(:css_text => "div.section { #{css_text} }")
   end
-  
+
   let(:declaration) do 
     CssStyleDeclaration.new(:css_text => css_text, :parent_rule => rule)
   end
 
-  
+
   describe "#length" do 
     it "returns number of declarations" do 
       expect(declaration.length).to eq 6
