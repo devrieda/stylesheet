@@ -3,11 +3,6 @@ module Stylesheet
 
     attr_reader :selector_text
 
-    def initialize(args)
-      @parent_rule = args[:parent_rule]
-      super
-    end
-    
     def type
       CssRule::STYLE_RULE
     end
