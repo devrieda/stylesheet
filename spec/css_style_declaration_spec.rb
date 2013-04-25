@@ -40,8 +40,18 @@ describe CssStyleDeclaration do
       expect(declaration.css_text).to eq expected
     end
   end
-
   
+  describe "#to_s" do 
+    it "builds the css text from the declarations" do 
+      expected = "color: #444; font-size: 12px; font-family: Arial, Verdana; " + 
+                 "border-left: 1px solid red; border-right-width: 1px; " + 
+                 "background-color: #535353;"
+
+      expect(declaration.css_text).to eq expected
+    end
+  end
+
+
   describe "#parent_rule" do 
     it "returns the parent css style rule" do 
       expect(declaration.parent_rule).to eq rule
@@ -50,7 +60,12 @@ describe CssStyleDeclaration do
 
   describe "a declaration" do 
     it "finds a declaration value by name" do 
-      
+      expect(declaration.fontSize).to eq "12px"
+      expect(declaration.fontFamily).to eq "Arial, Verdana"
+    end
+    
+    it "returns empty string for undefined declaration" do 
+      expect(declaration.overflow).to eq ""
     end
   end
 end
