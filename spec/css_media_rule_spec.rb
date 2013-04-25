@@ -22,6 +22,14 @@ describe CssMediaRule do
       expect(rule.css_rules).to be_kind_of CssRuleList
       expect(rule.css_rules.length).to eq 2
     end
+    
+    it "should find child rules when none are present" do 
+      css_text = "@media only screen and (max-width: 850px) {}"
+      rule     = CssMediaRule.new(:css_text => css_text)
+
+      expect(rule.css_rules).to be_kind_of CssRuleList
+      expect(rule.css_rules.length).to eq 0
+    end
   end
 
   describe "#type" do 
