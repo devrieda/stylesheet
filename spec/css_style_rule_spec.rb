@@ -3,7 +3,7 @@ require 'spec_helper'
 describe CssStyleRule do 
   
   let(:css_text) do 
-    "#main .body a:link { font-weight: bold; text-decoration: none }"
+    "#main .body a:link { font-weight: bold; text-decoration: none; }"
   end
 
   let(:rule) do 
@@ -22,6 +22,14 @@ describe CssStyleRule do
 
       expect(style).to be_kind_of(CssStyleDeclaration)
       expect(style.length).to eq 2
+    end
+    
+    it "returns the css style declaration for rules with missing end semicolon" do 
+      css_text = "#main .body a:link { font-weight: bold; text-decoration: none }"
+      rule = CssStyleRule.new(:css_text => css_text)
+
+      expect(rule.style).to be_kind_of(CssStyleDeclaration)
+      expect(rule.style.length).to eq 2
     end
   end
   
