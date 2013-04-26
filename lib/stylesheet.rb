@@ -4,6 +4,7 @@ require 'nokogiri'
 
 require 'stylesheet/errors'
 require 'stylesheet/version'
+require 'stylesheet/inflector'
 require 'stylesheet/document'
 require 'stylesheet/location'
 

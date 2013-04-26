@@ -17,7 +17,7 @@ module Stylesheet
       css_text.to_s.strip.chomp(";").split(";").each do |declaration|
         property, value = declaration.split(":", 2)
         @declarations << declaration.strip
-        @rules[camelize(property.strip).to_sym] = parse_value(value.strip)
+        @rules[Inflector.camelize(property.strip)] = parse_value(value.strip)
       end
     end
 
@@ -29,21 +29,13 @@ module Stylesheet
     alias_method :to_s, :css_text
 
     def method_missing(name, *args)
-      @rules[name]
+      @rules[name.to_s]
     end
 
     private
 
     def parse_value(value)
       value
-    end
-
-    def camelize(string)
-      string.gsub(/(-)(.)/) {|m| m[1].upcase }
-    end
-    
-    def underscore(string)
-      string.gsub(/(.)([A-Z])/) {|m| "#{m[0]}_#{m[1].downcase}" }
     end
   end
 end
