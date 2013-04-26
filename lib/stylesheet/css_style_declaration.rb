@@ -1,7 +1,7 @@
 module Stylesheet
   class CssStyleDeclaration
     extend Forwardable
-    def_delegators :@declarations, :length, :[], :each, :<<, :push, :delete
+    def_delegators :@declarations, :length, :size, :[], :each, :<<, :push, :delete, :to_s
     include Enumerable
 
     attr_reader :parent_rule

@@ -1,7 +1,7 @@
 module Stylesheet
   class StyleSheetList
     extend Forwardable
-    def_delegators :@styles, :length, :[], :each
+    def_delegators :@styles, :length, :size, :[], :each, :to_s
     include Enumerable
     
     def initialize(styles)

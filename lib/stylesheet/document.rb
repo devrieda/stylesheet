@@ -21,6 +21,9 @@ module Stylesheet
       @style_sheets ||= StyleSheetList.new(styles)
     end
 
+    def to_s
+      "#<Document location:#{location.href}>"
+    end
 
     private
 

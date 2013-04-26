@@ -1,7 +1,7 @@
 module Stylesheet
   class MediaList
     extend Forwardable
-    def_delegators :@media, :length, :[], :each, :<<, :push, :delete
+    def_delegators :@media, :length, :size, :[], :each, :<<, :push, :delete, :to_s
     include Enumerable
 
     MEDIA_TYPES = %w{all braille embossed handheld print projection screen speech tty tv}
