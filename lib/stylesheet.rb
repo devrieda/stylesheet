@@ -1,4 +1,5 @@
 require 'uri'
+require 'forwardable'
 require 'curb'
 require 'nokogiri'
 
