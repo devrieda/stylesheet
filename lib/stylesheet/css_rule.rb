@@ -43,6 +43,10 @@ module Stylesheet
     def matches_rule?
       false
     end
+    
+    def to_s
+      "#<#{self.class.name} css_text:#{css_text}>"
+    end
 
     private
 

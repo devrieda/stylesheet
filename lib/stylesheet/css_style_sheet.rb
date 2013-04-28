@@ -1,7 +1,7 @@
 module Stylesheet
   class CssStyleSheet
     attr_accessor :parent, :title
-    attr_reader :href, :media, :content
+    attr_reader :href, :media
     attr_writer :disabled, :type
     
     def initialize(args)
@@ -48,7 +48,11 @@ module Stylesheet
     end
     
     def content=(content)
-      @content = content || request_content
+      @content = content if content != ""
+    end
+    
+    def content
+      @content ||= request_content
     end
 
     def css_rules
