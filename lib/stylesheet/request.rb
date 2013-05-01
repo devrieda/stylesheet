@@ -8,12 +8,12 @@ module Stylesheet
 
       curl.body_str
 
-    rescue Stylsheet::Error
+    rescue Stylesheet::Error
       raise
 
     # re-raise external library errors in our namespace
     rescue => error
-      raise Stylsheet::Error.new("#{error.class}: #{error.message}")
+      raise Stylesheet::Error.new("#{error.class}: #{error.message}")
     end
 
     def user_agent
