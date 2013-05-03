@@ -6,7 +6,7 @@ require 'stylesheet/version'
 Gem::Specification.new do |gem|
   gem.name          = "stylesheet"
   gem.version       = Stylesheet::VERSION
-  gem.summary       = %q{Stylesheet is a CSS style sheet parser}
+  gem.summary       = %q{A CSS parser based on the DOM API}
   gem.description   = gem.summary
 
   gem.required_ruby_version = '>= 1.9.3'

@@ -49,11 +49,10 @@ puts rule.style.border
 
 ## Installation
 
-```
-gem install stylesheet
-```
-```
-gem "stylesheet"
+To install Stylesheet, add the gem to your Gemfile: 
+
+```ruby
+gem "stylesheet", "~> 0.1.0"
 ```
 
 ## LICENSE
