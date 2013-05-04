@@ -12,7 +12,9 @@ module Stylesheet
     end
 
     def style_sheet
-      @style_sheet ||= CssStyleSheet.new(location.href)
+      @style_sheet ||= CssStyleSheet.new(:href       => location.href,
+                                         :owner_rule => self,
+                                         :parent     => parent_style_sheet)
     end
 
     def self.matches_rule?(text)

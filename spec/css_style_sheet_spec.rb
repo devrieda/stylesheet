@@ -90,15 +90,20 @@ describe CssStyleSheet do
     end
   end
 
-  describe "#owner_node" do 
-    it "references owning node" do 
-
-    end
-  end
-  
   describe "#parent_style_sheet" do 
-    it "references parent style sheet" do 
+    let(:parent) do 
+      CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
+    end
 
+    it "should be nil for non-imported sheets" do 
+      expect(parent.parent_style_sheet).to be_nil
+    end
+
+    it "references parent style sheet" do 
+      text = "@import url(\"import1.css\");" 
+      rule = CssImportRule.new(:css_text => text, :parent_style_sheet => parent)
+
+      expect(rule.style_sheet.parent_style_sheet).to eq parent
     end
   end
 
@@ -138,8 +143,19 @@ describe CssStyleSheet do
   end
   
   describe "#owner_rule" do 
-    it "references the owner rule" do 
+    let(:parent) do 
+      CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
+    end
 
+    it "should be nil for non-imported sheets" do 
+      expect(parent.owner_rule).to be_nil
+    end
+
+    it "references the owner rule" do 
+      text = "@import url(\"import1.css\");" 
+      rule = CssImportRule.new(:css_text => text, :parent_style_sheet => parent)
+
+      expect(rule.style_sheet.owner_rule).to eq rule
     end
   end
   

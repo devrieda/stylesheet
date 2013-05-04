@@ -21,9 +21,9 @@ describe CssImportRule do
     let(:parent) do 
       CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
     end
-    
+
     let(:rule_url) { "http://example.com/css_import/stylesheets/import1.css"  }
-    
+
     it "parses an url from the style rule" do 
       css_text = "@import url(\"http://example.com/css_import/stylesheets/import1.css\");" 
     
