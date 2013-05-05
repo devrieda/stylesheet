@@ -1,7 +1,7 @@
 module Stylesheet
   class CssRuleList
     extend Forwardable
-    def_delegators :@rules, :length, :size, :[], :each, :insert, :to_s
+    def_delegators :@rules, :length, :size, :[], :each, :insert, :delete_at, :to_s
     include Enumerable
 
     def initialize(rules, parent = nil)

@@ -161,7 +161,15 @@ describe CssStyleSheet do
   
   describe "#delete_rule" do 
     it "deletes a rule from the css rules" do 
+      css = "div {\n  background-color: #aaa;\n} span {\n  color: #444; \n}"
+      sheet = CssStyleSheet.new(:content => css)
 
+      sheet.css_rules
+      expect(sheet.css_rules.length).to eq 2
+
+      sheet.delete_rule(0)
+      expect(sheet.css_rules.length).to eq 1
+      expect(sheet.css_rules[0].css_text).to eq "span { color: #444;}"
     end
   end
   

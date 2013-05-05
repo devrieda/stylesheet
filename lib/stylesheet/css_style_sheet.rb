@@ -66,6 +66,10 @@ module Stylesheet
       @parent if @owner_rule
     end
 
+    def delete_rule(index)
+      @css_rules.delete_at(index)
+    end
+
     def insert_rule(rule, index)
       @css_rules.insert(index, rule)
     end
