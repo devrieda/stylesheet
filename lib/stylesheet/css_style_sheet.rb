@@ -66,6 +66,10 @@ module Stylesheet
       @parent if @owner_rule
     end
 
+    def insert_rule(rule, index)
+      @css_rules.insert(index, rule)
+    end
+
     def location
       return if inline_css?
       @location ||= Location.new(@url, parent && parent.location)

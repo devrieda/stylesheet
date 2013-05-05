@@ -167,7 +167,14 @@ describe CssStyleSheet do
   
   describe "#insert_rule" do 
     it "adds a rule to the css rules" do 
+      css = "div {\n  background-color: #aaa;\n} span {\n  color: #444; \n}"
+      sheet = CssStyleSheet.new(:content => css)
 
+      expect(sheet.css_rules.length).to eq 2
+
+      sheet.insert_rule("#blanc { color: white }", 0); 
+      expect(sheet.css_rules.length).to eq 3
+      
     end
   end
 end
