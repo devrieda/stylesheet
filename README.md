@@ -22,10 +22,10 @@ Get attributes of a stylesheet:
 sheet = document.style_sheets[0]
 => #<Stylesheet::CssStyleSheet:0x007fa905c58c20>
 
-puts sheet.href
+sheet.href
 => "http://sportspyder.com/assets/application-26ff2c8d54ab9cd8e74af60fc650390e.css"
 
-puts sheet.type
+sheet.type
 => "text/css"
 ```
 
