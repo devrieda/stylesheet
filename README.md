@@ -8,43 +8,58 @@ Get styles from a document:
 
 ```ruby
 document = Stylesheet::Document.new("http://sportspyder.com")
+=> #<Document location:http://sportspyder.com/>
+
 document.style_sheets
+=> [#<Stylesheet::CssStyleSheet:0x007fa905c58c20>, 
+    #<Stylesheet::CssStyleSheet:0x007fa905c5f430>, 
+    #<Stylesheet::CssStyleSheet:0x007fa905c5e968>]
 ```
 
 Get attributes of a stylesheet: 
 
 ```ruby
 sheet = document.style_sheets[0]
+=> #<Stylesheet::CssStyleSheet:0x007fa905c58c20>
+
 puts sheet.href
+=> "http://sportspyder.com/assets/application-26ff2c8d54ab9cd8e74af60fc650390e.css"
+
 puts sheet.type
+=> "text/css"
 ```
 
 Get stylesheet media definitions: 
 
 ```ruby
-sheet = document.style_sheets[0]
-sheet.media.each do |media| 
-  puts media
-end
+sheet.media.map {|medium| medium }
+=> ["screen"]
 ```
 
 Get rules defined in a stylesheet: 
 
 ```ruby
 sheet = Stylesheet::CssStyleSheet.new("http://sportspyder.com/stylesheets/screen.css")
-sheet.css_rules.each do |rule|
-  puts rule.css_text
-  puts rule.selector_text
-end
+=> #<Stylesheet::CssStyleSheet:0x007fa905c58c20>
+
+rule = sheet.css_rules[0]
+=> #<Stylesheet::CssStyleRule>
+
+rule.css_text
+=> "iframe.editor{width:580px;height:150px;border:1px solid #ccc;background-color:#fff}"
+
+rule.selector_text
+=> "iframe.editor"
 ```
 
 Get declarations defined in a style rules: 
 
 ```ruby
-sheet = document.style_sheets[0]
-rule  = sheet.css_rules[0]
-puts rule.style[0]
-puts rule.style.border
+rule.style[0]
+=> "width:580px"
+
+rule.style.border
+=> "1px solid #ccc"
 ```
 
 ## Installation
