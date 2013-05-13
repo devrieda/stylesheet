@@ -22,7 +22,7 @@ module Stylesheet
       rules = rules.to_s.gsub(/\s+/m, " ").gsub(/([\};])\s/, '\1')
 
       directive_re = "@.+?;"
-      rules_re     = ".+?\{.+?\}"
+      rules_re     = ".+?\{.*?\}"
       split_rules = rules.scan(/(#{directive_re}|#{rules_re})/im).map {|r| r[0] }
 
       split_rules.map do |css_text| 

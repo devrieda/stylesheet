@@ -35,6 +35,10 @@ describe CssRuleList do
       font-size: 90%;
     }"
   end
+  
+  let(:style_w_empty_rules) do 
+    "#cboxOverlay{color:#ccc}#colorbox{}#cboxTopLeft{width:21px;}"
+  end
 
   describe ".new" do 
     it "parses charset rules" do 
@@ -67,6 +71,14 @@ describe CssRuleList do
       expect(rules.length).to eq 2
       expect(rules[0].css_text).to eq "body { color: #444;background-color: #535353;}"
       expect(rules[1].css_text).to eq "p { font-size: 90%;}"
+    end
+    
+    it "parses empty rules" do 
+      rules = CssRuleList.new(style_w_empty_rules)
+      expect(rules.length).to eq 3
+      expect(rules[0].css_text).to eq "#cboxOverlay{color:#ccc}"
+      expect(rules[1].css_text).to eq "#colorbox{}"
+      expect(rules[2].css_text).to eq "#cboxTopLeft{width:21px;}"
     end
   end
   
