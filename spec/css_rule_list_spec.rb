@@ -23,7 +23,19 @@ describe CssRuleList do
       src: url(\"http://example.com/fonts/VeraSeBd.ttf\");
     }"
   end
-  
+
+  let(:style_w_comments) do     
+    "body {
+      color: #444;
+      background-color: #535353;
+    }
+
+    /* style paragraphs */
+    p {
+      font-size: 90%;
+    }"
+  end
+
   describe ".new" do 
     it "parses charset rules" do 
       rules = CssRuleList.new(styles)
@@ -48,6 +60,13 @@ describe CssRuleList do
     it "parses font face rules" do 
       rules = CssRuleList.new(styles)
       expect(rules[4]).to be_kind_of(CssFontFaceRule)
+    end
+
+    it "removes comments" do 
+      rules = CssRuleList.new(style_w_comments)
+      expect(rules.length).to eq 2
+      expect(rules[0].css_text).to eq "body { color: #444;background-color: #535353;}"
+      expect(rules[1].css_text).to eq "p { font-size: 90%;}"
     end
   end
   

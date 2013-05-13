@@ -15,6 +15,9 @@ module Stylesheet
     private
     
     def parse(rules, parent)
+      # clean out comments
+      rules = rules.gsub(/\/\*[\s\S]*?\*\//, '')
+      
       # clean extraneous whitespace
       rules = rules.to_s.gsub(/\s+/m, " ").gsub(/([\};])\s/, '\1')
 
