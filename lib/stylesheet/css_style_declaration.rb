@@ -4,15 +4,16 @@ module Stylesheet
     def_delegators :@declarations, :length, :size, :[], :each, :<<, :push, :delete, :to_s
     include Enumerable
 
-    attr_reader :parent_rule
+    attr_reader :rules, :parent_rule
 
     def initialize(options={})
+      @rules        = Hash.new("")
       @parent_rule  = options[:parent_rule]
       self.css_text = options[:css_text]
     end
 
     def css_text=(css_text)
-      @declarations, @rules = [], Hash.new("")
+      @declarations = []
 
       css_text.to_s.strip.chomp(";").split(";").each do |declaration|
         property, value = declaration.split(":", 2)

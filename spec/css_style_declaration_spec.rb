@@ -51,6 +51,17 @@ describe CssStyleDeclaration do
     end
   end
 
+  describe "rules" do 
+    it "returns a hash of rules" do 
+      expected = {"color"            => "#444", 
+                  "fontSize"         => "12px", 
+                  "fontFamily"       => "Arial, Verdana", 
+                  "borderLeft"       => "1px solid red", 
+                  "borderRightWidth" => "1px", 
+                  "backgroundColor"  => "#535353"}
+      expect(declaration.rules).to eq expected
+    end
+  end
 
   describe "#parent_rule" do 
     it "returns the parent css style rule" do 
