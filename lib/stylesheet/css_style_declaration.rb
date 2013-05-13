@@ -1,36 +1,36 @@
 module Stylesheet
   class CssStyleDeclaration
     extend Forwardable
-    def_delegators :@declarations, :length, :size, :[], :each, :<<, :push, :delete, :to_s
+    def_delegators :@declarations_list, :length, :size, :[], :each, :<<, :push, :delete, :to_s
     include Enumerable
 
-    attr_reader :rules, :parent_rule
+    attr_reader :declarations, :parent_rule
 
     def initialize(options={})
-      @rules        = Hash.new("")
+      @declarations = Hash.new("")
       @parent_rule  = options[:parent_rule]
       self.css_text = options[:css_text]
     end
 
     def css_text=(css_text)
-      @declarations = []
+      @declarations_list = []
 
       css_text.to_s.strip.chomp(";").split(";").each do |declaration|
         property, value = declaration.split(":", 2)
-        @declarations << declaration.strip
-        @rules[Inflector.camelize(property.strip)] = parse_value(value.strip)
+        @declarations_list << declaration.strip
+        @declarations[property.strip] = parse_value(value.strip)
       end
     end
 
     def css_text      
-      css_text = @declarations.join("; ")
+      css_text = @declarations_list.join("; ")
       css_text += ";" if css_text != ""
     end
 
     alias_method :to_s, :css_text
 
     def method_missing(name, *args)
-      @rules[name.to_s]
+      @declarations[Inflector.dasherize(name.to_s)]
     end
 
     private

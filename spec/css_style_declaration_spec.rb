@@ -53,13 +53,13 @@ describe CssStyleDeclaration do
 
   describe "rules" do 
     it "returns a hash of rules" do 
-      expected = {"color"            => "#444", 
-                  "fontSize"         => "12px", 
-                  "fontFamily"       => "Arial, Verdana", 
-                  "borderLeft"       => "1px solid red", 
-                  "borderRightWidth" => "1px", 
-                  "backgroundColor"  => "#535353"}
-      expect(declaration.rules).to eq expected
+      expected = {"color"              => "#444", 
+                  "font-size"          => "12px", 
+                  "font-family"        => "Arial, Verdana", 
+                  "border-left"        => "1px solid red", 
+                  "border-right-width" => "1px", 
+                  "background-color"   => "#535353"}
+      expect(declaration.declarations).to eq expected
     end
   end
 
