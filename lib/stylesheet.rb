@@ -21,6 +21,7 @@ require 'stylesheet/css_charset_rule'
 require 'stylesheet/css_import_rule'
 require 'stylesheet/css_media_rule'
 require 'stylesheet/css_font_face_rule'
+require 'stylesheet/css_null_rule'
 
 require 'stylesheet/css_style_declaration'
 

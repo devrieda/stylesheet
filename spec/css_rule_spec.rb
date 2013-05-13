@@ -26,6 +26,15 @@ describe CssRule do
       src: url(\"http://example.com/fonts/VeraSeBd.ttf\");
     }"
   end
+  
+  let(:moz_doc_text) do 
+    "@-moz-document url-prefix() {
+      .rec_details .rec-ellipsis:before {
+        float:right;
+        content: url(/fade.png);
+      }
+    }"
+  end
 
   describe ".factory" do 
     it "should build an a css style rule" do 
@@ -57,6 +66,12 @@ describe CssRule do
       rule = CssRule.factory(:css_text           => font_face_text, 
                              :parent_style_sheet => Object.new)
       expect(rule).to be_kind_of(CssFontFaceRule)
+    end
+    
+    it "should build a null rule" do 
+      rule = CssRule.factory(:css_text           => moz_doc_text, 
+                             :parent_style_sheet => Object.new)
+      expect(rule).to be_kind_of(CssNullRule)
     end
   end
 

@@ -1,5 +1,6 @@
 module Stylesheet
   class CssRule
+    NULL_RULE      = 0
     STYLE_RULE     = 1
     CHARSET_RULE   = 2
     IMPORT_RULE    = 3
@@ -50,7 +51,7 @@ module Stylesheet
 
     private
 
-    def parse_css_text(css_text)
+    def parse_css_text
       raise NotImplementedError
     end
   end
