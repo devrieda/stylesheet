@@ -15,7 +15,8 @@ module Stylesheet
     def css_text=(css_text)
       @declarations_list = []
 
-      css_text.to_s.strip.chomp(";").split(";").each do |declaration|
+      re = /((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)\s*/
+      css_text.to_s.strip.chomp(";").scan(re).flatten.each do |declaration|
         property, value = declaration.split(":", 2)
         @declarations_list << declaration.strip
         @declarations[property.strip] = parse_value(value.strip)

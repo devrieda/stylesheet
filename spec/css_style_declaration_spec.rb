@@ -79,4 +79,19 @@ describe CssStyleDeclaration do
       expect(declaration.overflow).to eq ""
     end
   end
+
+  describe "a declaration with base64 encoded rule" do 
+    let(:css_text) do 
+      "background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIi);color:#1d6299;"
+    end
+
+    it "returns the css style declaration for rules with base64 data" do 
+      rule = CssStyleRule.new(:css_text => "div.section { #{css_text} }")
+      decl = CssStyleDeclaration.new(:css_text => css_text, :parent_rule => rule)
+      
+      expected = {"background" => "url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIi)",
+                  "color"      => "#1d6299"}
+      expect(decl.declarations).to eq expected
+    end
+  end
 end
