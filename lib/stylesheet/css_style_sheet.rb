@@ -62,6 +62,14 @@ module Stylesheet
 
     alias_method :rules, :css_rules 
 
+    def import_rules
+      css_rules.select {|r| r.type == CssRule::IMPORT_RULE }
+    end
+    
+    def style_rules
+      css_rules.select {|r| r.type == CssRule::STYLE_RULE }
+    end
+
     def parent_style_sheet
       @parent if @owner_rule
     end

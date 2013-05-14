@@ -142,6 +142,28 @@ describe CssStyleSheet do
     end
   end
   
+  describe "#import_rules" do 
+    it "returns all import rules from style sheet" do 
+      sheet = CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
+      expect(sheet.import_rules.length).to eq 9
+      
+      sheet.import_rules.each do |rule|
+        expect(rule.type).to eq CssRule::IMPORT_RULE
+      end
+    end
+  end
+  
+  describe "#style_rules" do 
+    it "returns all style rules from style sheet" do 
+      sheet = CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
+      expect(sheet.style_rules.length).to eq 1
+
+      sheet.style_rules.each do |rule|
+        expect(rule.type).to eq CssRule::STYLE_RULE
+      end
+    end
+  end
+  
   describe "#owner_rule" do 
     let(:parent) do 
       CssStyleSheet.new("http://example.com/css_import/stylesheets/screen.css")
