@@ -94,4 +94,18 @@ describe CssStyleDeclaration do
       expect(decl.declarations).to eq expected
     end
   end
+  
+  describe "a declaration with an invalid rule" do 
+    let(:css_text) do 
+      "padding0;color:#1d6299;"
+    end
+
+    it "skips the invalid rule" do 
+      rule = CssStyleRule.new(:css_text => "div.section { #{css_text} }")
+      decl = CssStyleDeclaration.new(:css_text => css_text, :parent_rule => rule)
+      
+      expected = {"color" => "#1d6299"}
+      expect(decl.declarations).to eq expected
+    end
+  end
 end

@@ -17,6 +17,8 @@ module Stylesheet
 
       re = /((?:'(?:\\'|.)*?'|"(?:\\"|.)*?"|\([^\)]*?\)|[^};])+)\s*/
       css_text.to_s.strip.chomp(";").scan(re).flatten.each do |declaration|
+        next unless declaration.include?(":")
+
         property, value = declaration.split(":", 2)
         @declarations_list << declaration.strip
         @declarations[property.strip] = parse_value(value.strip)
