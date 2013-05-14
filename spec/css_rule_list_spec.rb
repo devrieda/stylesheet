@@ -36,6 +36,17 @@ describe CssRuleList do
     }"
   end
   
+  let(:style_w_mismatched_comments) do 
+    "body {
+      color: #444;
+      background-color: #535353;
+    }
+
+    */
+    p {
+      font-size: 90%;
+    }"  end
+  
   let(:style_w_empty_rules) do 
     "#cboxOverlay{color:#ccc}#colorbox{}#cboxTopLeft{width:21px;}"
   end
@@ -68,6 +79,13 @@ describe CssRuleList do
 
     it "removes comments" do 
       rules = CssRuleList.new(style_w_comments)
+      expect(rules.length).to eq 2
+      expect(rules[0].css_text).to eq "body { color: #444;background-color: #535353;}"
+      expect(rules[1].css_text).to eq "p { font-size: 90%;}"
+    end
+    
+    it "removes mismatched comments" do 
+      rules = CssRuleList.new(style_w_mismatched_comments)
       expect(rules.length).to eq 2
       expect(rules[0].css_text).to eq "body { color: #444;background-color: #535353;}"
       expect(rules[1].css_text).to eq "p { font-size: 90%;}"
