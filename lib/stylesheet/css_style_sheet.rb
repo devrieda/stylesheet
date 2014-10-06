@@ -106,7 +106,7 @@ module Stylesheet
     end
 
     def request_content
-      raise InvalidLocationError unless location.valid?
+      raise InvalidLocationError unless location && location.valid?
       request.get(location.href)
     end
 
