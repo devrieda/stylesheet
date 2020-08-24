@@ -8,10 +8,10 @@ describe CssStyleSheet do
   describe "#disabled" do 
     it "shows if style sheet is disabled" do 
       sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")
-      expect(sheet.disabled?).to be_false
+      expect(sheet.disabled?).to eq false
 
       sheet.disabled = true
-      expect(sheet.disabled?).to be_true
+      expect(sheet.disabled?).to eq true
     end
   end
 

@@ -41,17 +41,17 @@ describe CssMediaRule do
   describe ".matches_rule?" do 
     it "should match text starting with @media" do 
       matches = CssMediaRule.matches_rule?(css_text)
-      expect(matches).to be_true
+      expect(matches).to eq true
     end
 
     it "should not match text without at-rule" do 
       matches = CssMediaRule.matches_rule?("a:link { color: #357ad1; }")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
 
     it "should not match text without media" do 
       matches = CssMediaRule.matches_rule?("@charset \"UTF-8\";")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
   end
 end

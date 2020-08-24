@@ -47,7 +47,7 @@ module Stylesheet
     end
 
     def valid?
-       valid_protocol? && valid_host?
+      !!(valid_protocol? && valid_host?)
     end
     
     def expand_paths_from_parent
@@ -74,19 +74,19 @@ module Stylesheet
     def valid_protocol?
       protocol && protocol != ":"
     end
-    
+
     def valid_host?
       host && host != ""
     end
-    
+
     def valid_port?
       port && port != ""
     end
-    
+
     def standard_port?
       port_80? || port_443?
     end
-    
+
     def port_80?
       uri && uri.port == 80 && uri.scheme == "http"
     end
@@ -100,14 +100,13 @@ module Stylesheet
         URI.parse(url.strip)
       rescue URI::InvalidURIError
         URI.parse(URI.escape(url.strip))
-      end      
+      end
 
     # re-raise external library errors in our namespace
     rescue URI::InvalidURIError => error
       raise Stylesheet::InvalidLocationError.new(
         "#{error.class}: #{error.message}")
     end
-    
+
   end
 end
-

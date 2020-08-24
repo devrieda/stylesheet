@@ -42,12 +42,12 @@ describe CssStyleRule do
   describe ".matches_rule?" do 
     it "should match text that doesn't begin with an at-rule" do 
       matches = CssStyleRule.matches_rule?(css_text)
-      expect(matches).to be_true
+      expect(matches).to eq true
     end
     
     it "should not match rules starting with at-rule" do 
       matches = CssStyleRule.matches_rule?("@import url(\"import1.css\");")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
   end
 end

@@ -31,17 +31,17 @@ describe CssFontFaceRule do
   describe ".matches_rule?" do 
     it "should match text starting with @font-face" do 
       matches = CssFontFaceRule.matches_rule?(css_text)
-      expect(matches).to be_true
+      expect(matches).to eq true
     end
     
     it "should not match text without at-rule" do 
       matches = CssFontFaceRule.matches_rule?("a:link { color: #357ad1; }")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
 
     it "should not match text without font-face" do 
       matches = CssFontFaceRule.matches_rule?("@import url(\"import1.css\");")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
   end
 end

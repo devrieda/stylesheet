@@ -8,18 +8,14 @@ describe Location do
       location = Location.new(url)
       expect(location.host).to eq "initvisual.com"
     end
-    
+
     it "should accept relative urls" do 
       location = Location.new("/some/path.html")
       expect(location.to_s).to eq "/some/path.html"
     end
-    
-    it "should throw error for invalid host" do 
-      expect { Location.new("http://") }.to raise_error(InvalidLocationError)
-    end
   end
-  
-  
+
+
   describe "#new with parent" do 
     it "should not expand a full url" do 
       parent   = Location.new("http://example.com/css/url.html")
@@ -31,7 +27,7 @@ describe Location do
     it "should expand a relative path into a full path given the parent" do 
       parent   = Location.new("http://example.com/css/relative.html")
       location = Location.new("stylesheets/screen.css", parent)
-      
+
       expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
     end
 
@@ -40,9 +36,9 @@ describe Location do
       location = Location.new("/css/stylesheets/screen.css", parent)
 
       expect(location.to_s).to eq "http://example.com/css/stylesheets/screen.css"
-    end    
+    end
   end
-  
+
 
   describe "#host" do 
     it "should parse out the url host" do 
@@ -50,27 +46,27 @@ describe Location do
       expect(location.host).to eq "initvisual.com"
     end
   end
-  
-  describe "#host=" do 
-    it "should assign host to url" do 
+
+  describe "#host=" do
+    it "should assign host to url" do
       location = Location.new(url)
-      
+
       location.host = "derekdevries.com"
       expect(location.host).to eq "derekdevries.com"
     end
   end
-  
+
   describe "#hostname" do 
     it "should parse out the url hostname" do 
       location = Location.new(url)
       expect(location.hostname).to eq "initvisual.com"
     end
   end
-  
+
   describe "#hostname=" do 
     it "should assign hostname to url" do 
       location = Location.new(url)
-      
+
       location.hostname = "derekdevries.com"
       expect(location.hostname).to eq "derekdevries.com"
     end
@@ -86,14 +82,14 @@ describe Location do
   describe "#pathname=" do 
     it "should assign path to url" do 
       location = Location.new(url)
-      
+
       location.pathname = "/work"
       expect(location.pathname).to eq "/work"
     end
 
     it "add initial forward-slash if not given" do 
       location = Location.new(url)
-      
+
       location.pathname = "work"
       expect(location.pathname).to eq "/work"
     end
@@ -243,17 +239,22 @@ describe Location do
   describe "#valid?" do 
     it "should be true with a valid host and protocol" do 
       location = Location.new("http://initvisual.com")
-      expect(location.valid?).to be_true
+      expect(location.valid?).to eq true 
     end
 
-    it "should be false for an invalid host" do 
+    it "should be false for an invalid host" do
       location = Location.new("/asdf")
-      expect(location.valid?).to be_false      
+      expect(location.valid?).to eq false
     end
 
-    it "should be false for an invalid protocol" do 
+    it "should be false for a missing host" do
+      location = Location.new("http://")
+      expect(location.valid?).to eq false
+    end
+
+    it "should be false for an invalid protocol" do
       location = Location.new("foo.com/asdf")
-      expect(location.valid?).to be_false
+      expect(location.valid?).to eq false
     end
   end
   

@@ -162,17 +162,17 @@ describe CssImportRule do
   describe ".matches_rule?" do 
     it "should match text starting with @import" do 
       matches = CssImportRule.matches_rule?(css_text)
-      expect(matches).to be_true
+      expect(matches).to eq true
     end
     
     it "should not match text without at-rule" do 
       matches = CssImportRule.matches_rule?("a:link { color: #357ad1; }")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
 
     it "should not match text without import" do 
       matches = CssImportRule.matches_rule?("@charset \"UTF-8\";")
-      expect(matches).to be_false
+      expect(matches).to eq false
     end
   end
 end
