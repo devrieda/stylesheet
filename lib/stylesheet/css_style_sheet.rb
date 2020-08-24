@@ -106,6 +106,7 @@ module Stylesheet
     end
 
     def request_content
+      return "" if inline_css?
       raise InvalidLocationError unless location && location.valid?
       request.get(location.href)
     end

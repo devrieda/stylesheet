@@ -137,6 +137,14 @@ describe CssStyleSheet do
       }.not_to raise_error
     end
 
+    it "doesn't fetch for nil inline styles" do
+      sheet = CssStyleSheet.new(content: nil)
+
+      expect {
+        sheet.css_rules.map {|r| r.content }
+      }.not_to raise_error
+    end
+
   end
 
   describe "#css_rules" do 
