@@ -127,7 +127,18 @@ describe CssStyleSheet do
       expect(sheet.type).to eq "text/css"
     end
   end
-  
+
+  describe "#content" do
+    it "doesn't fetch for empty inline styles" do
+      sheet = CssStyleSheet.new(content: "")
+
+      expect {
+        sheet.css_rules.map {|r| r.content }
+      }.not_to raise_error
+    end
+
+  end
+
   describe "#css_rules" do 
     it "returns a list of css rules found in the style sheet" do 
       sheet = CssStyleSheet.new("http://example.com/css/stylesheets/screen.css")

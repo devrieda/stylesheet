@@ -49,7 +49,7 @@ module Stylesheet
     end
 
     def content=(content)
-      @content = content if content != ""
+      @content = content if content
     end
 
     def content
